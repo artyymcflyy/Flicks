@@ -15,6 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet var errorView: UIView!
     @IBOutlet var tableView: UITableView!
     
+    var endpoint: String!
     var movies: [NSDictionary]?
     
     override func viewDidLoad() {
@@ -29,8 +30,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         errorView.isHidden = true
         
-        let apiKey = "45117f2cb86205671669a8ab94d64f81"
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=45117f2cb86205671669a8ab94d64f81")
+
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
@@ -59,10 +60,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    func getApiKey()->String{
+        var api = ""
+        if let path = Bundle.path(forResource: "Info", ofType: "plist", inDirectory: "Flicks"){
+            print(path)
+            if let dic = NSDictionary(contentsOfFile: path){
+                api = dic["theMovieDB_APIKey"] as! String
+            }
+        }
+        return api
+
+    }
+    
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
         
-        let apiKey = "45117f2cb86205671669a8ab94d64f81"
-        let url = URL(string:"https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = URL(string:"https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=45117f2cb86205671669a8ab94d64f81")
         let request = URLRequest(url: url!)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
