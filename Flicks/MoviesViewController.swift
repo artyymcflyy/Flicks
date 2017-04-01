@@ -122,8 +122,21 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let baseURL = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie["poster_path"] as? String{
         
-            let posterURL = NSURL(string: baseURL + posterPath)! as URL
-            cell.posterView.setImageWith(posterURL)
+            let posterURLRequest = URLRequest(url: NSURL(string: baseURL + posterPath)! as URL)
+            
+            cell.posterView.setImageWith(posterURLRequest, placeholderImage: nil, success:{(posterURLRequest, posterURLResponse, image)->Void in
+                // image was not cached
+                if posterURLResponse != nil{
+                    cell.posterView.alpha = 0.0
+                    cell.posterView.image = image
+                    UIView.animate(withDuration: 0.3, animations: {()->Void in
+                        cell.posterView.alpha = 1.0
+                    })
+                }else{
+                    //image was cached
+                    cell.posterView.image = image 
+                }
+            }, failure:{(posterURLRequest, posterURLResponse, error) -> Void in})
         }
         
         
