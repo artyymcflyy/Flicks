@@ -21,6 +21,8 @@ class MoviesDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tabBarHeight = tabBarController!.tabBar.frame.size.height
+        
         let title = movie!["title"] as! String
         titleLabel.text = title
         
@@ -29,8 +31,8 @@ class MoviesDetailViewController: UIViewController {
         overviewLabel.sizeToFit()
         
         //set view position x and make height fit to context
-        infoView.frame.origin.y = posterImageView.frame.size.height - ((titleLabel.frame.size.height + overviewLabel.frame.size.height + 30)/2)
-        infoView.frame.size.height = titleLabel.frame.size.height + overviewLabel.frame.size.height + 30
+        infoView.frame.origin.y = posterImageView.frame.size.height - ((titleLabel.frame.size.height + overviewLabel.frame.size.height + tabBarHeight+50)/2)
+        infoView.frame.size.height = titleLabel.frame.size.height + overviewLabel.frame.size.height+tabBarHeight + 50
         
         let baseURL = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie!["poster_path"] as? String{
