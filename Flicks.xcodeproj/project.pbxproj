@@ -52,13 +52,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C6B554B41E8F54F10003FE69 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Images;
-			sourceTree = "<group>";
-		};
 		C6CB78971E8C64030059FE73 = {
 			isa = PBXGroup;
 			children = (
@@ -80,10 +73,9 @@
 		C6CB78A21E8C64040059FE73 /* Flicks */ = {
 			isa = PBXGroup;
 			children = (
-				C6B554B41E8F54F10003FE69 /* Images */,
+				C6CB78A31E8C64040059FE73 /* AppDelegate.swift */,
 				C6CB78BA1E8C6EB30059FE73 /* View Controllers */,
 				C6CB78B71E8C6E8A0059FE73 /* Views */,
-				C6CB78A31E8C64040059FE73 /* AppDelegate.swift */,
 				C6CB78AC1E8C64040059FE73 /* LaunchScreen.storyboard */,
 				C6CB78AF1E8C64040059FE73 /* Info.plist */,
 				C6B554B51E8F57270003FE69 /* Assets.xcassets */,
