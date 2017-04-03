@@ -43,6 +43,8 @@ I couldnt figure out a way to change the color of a tab bar item icon unless I p
 
 I noticed that someone posted about using the filter method for searching an array. I thought that was very helpful in that it allowed me to break the method and quarry params down bit by bit using a working scenario to further understand how and why it worked rather than wasting time finding a solution.
 
+I did look into trying to implement the UISegmentedControl feature. Creating collection views from scratch seemed a bit tricky since I waited closer to the deadline to try and tackle it. I am interested in figuring that out soon enough with a different assignment. 
+
 ## License
 
     Copyright [yyyy] [name of copyright owner]
