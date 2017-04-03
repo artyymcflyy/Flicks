@@ -18,6 +18,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     var endpoint: String!
     var movies: [NSDictionary]?
+    var resultsArr: [NSDictionary]?
+    var tempArr:[NSDictionary]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     //print("response: \(responseDictionary)")
                     
                     self.movies = (responseDictionary["results"] as! [NSDictionary])
+                    self.tempArr = self.movies
                     self.tableView.reloadData()
                 }
             }else{
@@ -112,6 +115,24 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         searchBar.setShowsCancelButton(true, animated: true)
         return true
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        let resultArr = movies?.filter { String(describing: $0["title"]).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil}
+        
+        if let results = resultArr{
+            if results.count > 0{
+                movies = results
+            }
+        }
+        
+        if searchText.isEmpty{
+            movies = tempArr
+        }
+        
+        tableView.reloadData()
+    }
+    
+    
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
