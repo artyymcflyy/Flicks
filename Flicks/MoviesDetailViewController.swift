@@ -34,11 +34,24 @@ class MoviesDetailViewController: UIViewController {
         infoView.frame.origin.y = posterImageView.frame.size.height - ((titleLabel.frame.size.height + overviewLabel.frame.size.height + tabBarHeight+50)/2)
         infoView.frame.size.height = titleLabel.frame.size.height + overviewLabel.frame.size.height+tabBarHeight + 50
         
-        let baseURL = "https://image.tmdb.org/t/p/w500"
+        let smallPosterBaseURL = "https://image.tmdb.org/t/p/w185"
+        let largePosterBaseURL = "https://image.tmdb.org/t/p/w500"
+        
         if let posterPath = movie!["poster_path"] as? String{
-            
-            let posterURL = NSURL(string: baseURL + posterPath)! as URL
-            posterImageView.setImageWith(posterURL)
+            let smallPosterURLRequest = URLRequest(url: NSURL(string: smallPosterBaseURL + posterPath)! as URL)
+            let largePosterURLRequest = URLRequest(url: NSURL(string: largePosterBaseURL + posterPath)! as URL)
+            posterImageView.setImageWith(smallPosterURLRequest, placeholderImage: nil, success:{(posterURLRequest, posterURLResponse, smallImage)->Void in
+                self.posterImageView.alpha = 0.0
+                self.posterImageView.image = smallImage
+                
+                UIView.animate(withDuration: 0.3, animations: {()-> Void in
+                    self.posterImageView.alpha = 1.0
+                }, completion: {(success)->Void in
+                    self.posterImageView.setImageWith(largePosterURLRequest, placeholderImage: smallImage, success: {(largePosterURLRequest, largePosterURLResponse, largeImage)->Void in
+                            self.posterImageView.image = largeImage
+                    }, failure: {(largePosterURLRequest, largePosterURLResponse, largeImage)->Void in})
+                })
+            }, failure:{(posterURLRequest, posterURLResponse, image)->Void in})
         }
         
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.size.height)
